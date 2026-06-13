@@ -12,29 +12,27 @@ function assertApiBaseUrl() {
   }
 }
 
+// NOTE: 一時的な回避策 — ブラウザのプリフライト(OPTIONS) を発生させない
+// Content-Type を application/x-www-form-urlencoded にして送信します。
 async function callGasApi(action, params = {}) {
   assertApiBaseUrl();
 
-  const payload = { action, ...params };
+  const form = new URLSearchParams({ action, ...params });
   const response = await fetch(GAS_API_BASE_URL, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json;charset=UTF-8'
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     },
-    body: JSON.stringify(payload)
+    body: form.toString()
   });
 
-  const text = await response.text();
-
   if (!response.ok) {
+    const text = await response.text().catch(() => '');
     throw new Error(`GAS API error ${response.status}: ${response.statusText} ${text}`);
   }
 
-  try {
-    return JSON.parse(text);
-  } catch (error) {
-    throw new Error(`GAS API のレスポンスが JSON ではありません: ${error.message}`);
-  }
+  // レスポンスは JSON を期待
+  return await response.json();
 }
 
 export async function getProgramList() {
