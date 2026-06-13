@@ -4,7 +4,7 @@
  * 2) GitHub Pages で公開する HTML から import して利用します。
  */
 
-let GAS_API_BASE_URL = 'https://script.google.com/macros/s/REPLACE_WITH_YOUR_DEPLOY_ID/exec';
+let GAS_API_BASE_URL = 'https://script.google.com/a/macros/sakura-h.ed.jp/s/AKfycbwRLkBx07y89wl1U_-OfWzAIrotvR_s_iqUEGxM0oC9SDu-7krHqa18qREz6zSzX2nJGQ/exec';
 
 function assertApiBaseUrl() {
   if (!GAS_API_BASE_URL || GAS_API_BASE_URL.includes('REPLACE_WITH_YOUR_DEPLOY_ID')) {
